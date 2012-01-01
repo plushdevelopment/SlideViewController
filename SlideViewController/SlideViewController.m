@@ -14,8 +14,10 @@
  */
 
 #import "SlideViewController.h"
-
 #import <QuartzCore/QuartzCore.h>
+
+#define kSVCLeftAnchorX     100.0f
+#define kSVCRightAnchorX    190.0f
 
 @interface SlideViewNavigationBar : UINavigationBar {
 @private
@@ -307,17 +309,23 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
     if (_slideNavigationControllerState == kSlideNavigationControllerStateDragging) {
-
-        if (_slideNavigationController.view.transform.tx >= 180.0f) {
-            
-            [self slideOutSlideNavigationControllerView];            
-            
+        UITouch *touch = [touches anyObject];
+        CGPoint endPoint = [touch locationInView:self.view];
+        
+        // Check in which direction we were dragging
+        if (endPoint.x < _startingDragPoint.x) {
+            if (_slideNavigationController.view.transform.tx <= kSVCRightAnchorX) {
+                [self slideInSlideNavigationControllerView];
+            } else {
+                [self slideOutSlideNavigationControllerView]; 
+            }
         } else {
-            
-            [self slideInSlideNavigationControllerView];
-            
+            if (_slideNavigationController.view.transform.tx >= kSVCLeftAnchorX) {
+                [self slideOutSlideNavigationControllerView];
+            } else {
+                [self slideInSlideNavigationControllerView];
+            }
         }
-    
     }
     
 }

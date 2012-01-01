@@ -1,4 +1,4 @@
-TimeScroller
+SlideViewController
 ============
 
 ![Screenshot: Launch image](https://github.com/andrewroycarter/SlideViewController/raw/master/screenshot.png)

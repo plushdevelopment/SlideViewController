@@ -16,8 +16,10 @@
 #import "SlideViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define kSVCLeftAnchorX     100.0f
-#define kSVCRightAnchorX    190.0f
+#define kSVCLeftAnchorX                 100.0f
+#define kSVCRightAnchorX                190.0f
+#define kSVCSwipeNavigationBarOnly      YES
+
 
 @interface SlideViewNavigationBar : UINavigationBar {
 @private
@@ -278,7 +280,9 @@
         _startingDragTransformTx = _slideNavigationController.view.transform.tx;
     }
     
-    if (_startingDragPoint.y <= 44.0f) {
+    // we only trigger a swipe if either navigationBarOnly is deactivated
+    // or we swiped in the navigationBar
+    if (!kSVCSwipeNavigationBarOnly || _startingDragPoint.y <= 44.0f) {
         
         _slideNavigationControllerState = kSlideNavigationControllerStateDragging;
         _startingDragTransformTx = _slideNavigationController.view.transform.tx;

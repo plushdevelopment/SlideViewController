@@ -24,11 +24,11 @@
 @interface SlideViewNavigationBar : UINavigationBar {
 @private
     
-    id <SlideViewNavigationBarDelegate> _slideViewNavigationBarDelegate;
+    id <SlideViewNavigationBarDelegate> __unsafe_unretained _slideViewNavigationBarDelegate;
     
 }
 
-@property (nonatomic, assign) id <SlideViewNavigationBarDelegate> slideViewNavigationBarDelegate;
+@property (nonatomic, unsafe_unretained) id <SlideViewNavigationBarDelegate> slideViewNavigationBarDelegate;
 
 @end
 
@@ -79,12 +79,10 @@
         UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
         [background setImage:[[UIImage imageNamed:@"cell_background"] stretchableImageWithLeftCapWidth:0.0f topCapHeight:0.0f]];
         self.backgroundView = background;
-        [background release];
         
         UIImageView *selectedBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
         [selectedBackground setImage:[[UIImage imageNamed:@"cell_selected_background"] stretchableImageWithLeftCapWidth:0.0f topCapHeight:0.0f]];
         self.selectedBackgroundView = selectedBackground;
-        [selectedBackground release];
         
         self.textLabel.textColor = [UIColor colorWithRed:190.0f/255.0f green:197.0f/255.0f blue:212.0f/255.0f alpha:1.0f];
         self.textLabel.highlightedTextColor = self.textLabel.textColor;
@@ -131,15 +129,6 @@
     return self;
 }
 
-- (void)dealloc {
-    
-    [_touchView release];
-    [_overlayView release];
-    [_slideNavigationController release];
-    
-    [super dealloc];
-    
-}
 
 #pragma mark - View Lifecycle
 
@@ -181,7 +170,7 @@
 - (void)configureViewController:(UIViewController *)viewController {
     
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(menuBarButtonItemPressed:)];
-    viewController.navigationItem.leftBarButtonItem = [barButtonItem autorelease];
+    viewController.navigationItem.leftBarButtonItem = barButtonItem;
     
 }
 
@@ -411,7 +400,7 @@
     
     if (!cell) {
         
-        cell = [[[SlideViewTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:resuseIdentifier] autorelease];
+        cell = [[SlideViewTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:resuseIdentifier];
     
     }
 
@@ -486,9 +475,8 @@
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.text = titleString;
     [imageView addSubview:titleLabel];
-    [titleLabel release];
 
-    return [imageView autorelease];
+    return imageView;
     
 }
 
@@ -524,7 +512,6 @@
     [self configureViewController:viewController];
     
     [_slideNavigationController setViewControllers:[NSArray arrayWithObject:viewController] animated:NO];
-    [viewController release];
     
     [self slideInSlideNavigationControllerView];
     

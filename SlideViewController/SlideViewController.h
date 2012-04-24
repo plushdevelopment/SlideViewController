@@ -64,7 +64,7 @@ typedef enum {
     IBOutlet UINavigationController *_slideNavigationController;
     IBOutlet UISearchBar *_searchBar;
     IBOutlet UITableView *_tableView;
-    id <SlideViewControllerDelegate> _delegate;
+    id <SlideViewControllerDelegate> __unsafe_unretained _delegate;
     CGPoint _startingDragPoint;
     CGFloat _startingDragTransformTx;
     UIView *_touchView;
@@ -72,7 +72,7 @@ typedef enum {
     UIView *_overlayView;
 }
 
-@property (nonatomic, assign) id <SlideViewControllerDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id <SlideViewControllerDelegate> delegate;
 
 - (void)configureViewController:(UIViewController *)viewController;
 - (void)menuBarButtonItemPressed:(id)sender;

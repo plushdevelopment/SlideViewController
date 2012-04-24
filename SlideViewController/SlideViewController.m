@@ -169,7 +169,7 @@
 
 - (void)configureViewController:(UIViewController *)viewController {
     
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStylePlain target:self action:@selector(menuBarButtonItemPressed:)];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"menu-bar-btn.png"] style:UIBarButtonItemStylePlain target:self action:@selector(menuBarButtonItemPressed:)];
     viewController.navigationItem.leftBarButtonItem = barButtonItem;
     
 }
